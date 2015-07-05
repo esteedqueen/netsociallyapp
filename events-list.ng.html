@@ -1,0 +1,16 @@
+<form>
+  	<label>Title</label>
+  	<input ng-model="newEvent.title">
+  	<label>Description</label>
+  	<input ng-model="newEvent.description">
+  	<button ng-click="events.save(newEvent); newEvent='';">Add</button>
+  </form>
+  	<ul>
+  		<li ng-repeat="event in events">
+  			<a href="/events/{{event._id}}">{{event.title}}</a>
+  			<p>{{event.description}}</p>
+  			<button ng-click="remove(event)">X</button>
+  		</li>
+  	</ul>
+
+  	<button ng-click="removeAll()">remove all</button>

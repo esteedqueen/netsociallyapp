@@ -1,4 +1,4 @@
-Parties = new Mongo.Collection("parties");
+Events = new Mongo.Collection("events");
 
 if (Meteor.isClient) {
 	angular
@@ -11,58 +11,58 @@ if (Meteor.isClient) {
 	  		$locationProvider.html5Mode(true);
 
 	  		$stateProvider
-	  		  .state('parties', {
-	  		  	url: '/parties',
-	  		  	templateUrl: 'parties-list.ng.html',
-	  		  	controller: 'PartiesListCtrl'
+	  		  .state('events', {
+	  		  	url: '/events',
+	  		  	templateUrl: 'events-list.ng.html',
+	  		  	controller: 'EventsListCtrl'
 	  		  })
-	  		  .state('partyDetails', {
-	  		  	url: '/parties/:partyId',
-	  		  	templateUrl: 'party-details.ng.html',
-	  		  	controller: 'PartyDetailsCtrl'
+	  		  .state('eventDetails', {
+	  		  	url: '/events/:eventId',
+	  		  	templateUrl: 'event-details.ng.html',
+	  		  	controller: 'EventDetailsCtrl'
 	  		  });
 
-	  		  $urlRouterProvider.otherwise('/parties');
+	  		  $urlRouterProvider.otherwise('/events');
 	  	}]);
 
 	angular
-	  .module('netsocially').controller('PartiesListCtrl', ['$scope', '$meteor',
+	  .module('netsocially').controller('EventsListCtrl', ['$scope', '$meteor',
 	  	  function ($scope, $meteor) {
 	  	  	
-	  	  	$scope.parties = $meteor.collection(Parties);
+	  	  	$scope.events = $meteor.collection(Events);
 
-	  	  	$scope.remove = function(party) {
-	  	  		$scope.parties.remove(party);
+	  	  	$scope.remove = function(event) {
+	  	  		$scope.events.remove(event);
 	  	  	};
 
 	  	  	$scope.removeAll = function() {
-	  	  		$scope.parties.remove();
+	  	  		$scope.events.remove();
 	  	  	};
 
 	  	  }]);
 
 	angular
-	  .module('netsocially').controller('PartyDetailsCtrl', ['$scope', '$stateParams', 
+	  .module('netsocially').controller('EventDetailsCtrl', ['$scope', '$stateParams', 
 	  	function($scope, $stateParams) {
-	  		$scope.partyId = $stateParams.partyId;
+	  		$scope.eventId = $stateParams.eventId;
 	  	}]);
 };
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    if (Parties.find().count() === 0) {
+    if (Events.find().count() === 0) {
 
-      var parties = [
-        {'name': 'Dubstep-Free Zone',
+      var events = [
+        {'title': 'Dubstep-Free Zone',
           'description': 'Can we please just for an evening not listen to dubstep.'},
-        {'name': 'All dubstep all the time',
+        {'title': 'All dubstep all the time',
           'description': 'Get it on!'},
-        {'name': 'Savage lounging',
+        {'title': 'Savage lounging',
           'description': 'Leisure suit required. And only fiercest manners.'}
       ];
 
-      for (var i = 0; i < parties.length; i++)
-        Parties.insert(parties[i]);
+      for (var i = 0; i < events.length; i++)
+        Events.insert(events[i]);
 
     }
    });
