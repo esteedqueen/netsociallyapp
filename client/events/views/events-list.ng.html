@@ -3,7 +3,7 @@
   	<input ng-model="newEvent.title">
   	<label>Description</label>
   	<input ng-model="newEvent.description">
-  	<button ng-click="events.save(newEvent); newEvent='';">Add</button>
+  	<button ng-click="newEvent.owner=$root.currentUser._id; events.save(newEvent); newEvent='';">Add</button>
   </form>
   	<ul>
   		<li ng-repeat="event in events">
